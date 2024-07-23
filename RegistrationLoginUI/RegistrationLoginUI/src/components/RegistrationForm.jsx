@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/RegistrationForm.css';
+import axios from 'axios';
+import { useAuth } from '../auth/AuthContext';
+
+axios.defaults.withCredentials = true;
 
 const RegistrationForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [verifyPassword, setVerifyPassword] = useState('');
+  const [form, setForm] = useState({ username: '', password: '', verifyPassword: '' });
   const [message, setMessage] = useState('');
+  const { login } = useAuth();
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { username, password, verifyPassword } = form;
 
     if (password !== verifyPassword) {
       setMessage('Passwords do not match');
@@ -18,29 +26,16 @@ const RegistrationForm = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password, verifyPassword }),
-      });
-
-      if (response.ok) {
-        setMessage('Registration successful');
-        setUsername('');
-        setPassword('');
-        setVerifyPassword('');
-        
-        // Redirect to login page after successful registration
-        navigate('/login');
-      } else {
-        const data = await response.json();
-        setMessage(data.message); // Assuming the error message is sent as { message: 'error message' }
-      }
+      const response = await axios.post('http://localhost:8080/auth/register', form);
+      setMessage('User registered successfully');
+      login(response.data); // Assuming this updates authentication state
+      navigate('/login'); // Redirect to login page after successful registration
     } catch (error) {
-      console.error('Error during registration:', error);
-      setMessage('Error during registration');
+      if (error.response) {
+        setMessage(error.response.data);
+      } else {
+        setMessage('An error occurred. Please try again.');
+      }
     }
   };
 
@@ -55,8 +50,9 @@ const RegistrationForm = () => {
               <input
                 type="text"
                 className="form-control"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                name="username"
+                value={form.username}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -65,8 +61,9 @@ const RegistrationForm = () => {
               <input
                 type="password"
                 className="form-control"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={form.password}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -75,8 +72,9 @@ const RegistrationForm = () => {
               <input
                 type="password"
                 className="form-control"
-                value={verifyPassword}
-                onChange={(e) => setVerifyPassword(e.target.value)}
+                name="verifyPassword"
+                value={form.verifyPassword}
+                onChange={handleChange}
                 required
               />
             </div>

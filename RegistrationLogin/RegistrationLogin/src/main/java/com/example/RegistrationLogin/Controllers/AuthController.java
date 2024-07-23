@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -25,25 +26,25 @@ public class AuthController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<String> getUserFromSession(HttpSession session) {
+    public ResponseEntity<User> getUserFromSession(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            return ResponseEntity.ok("User: " + user.getUsername() + " is logged in");
+            return ResponseEntity.ok(user);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No user logged in");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody RegistrationFormDTO registrationForm, HttpSession session) {
+    public ResponseEntity<User> registerUser(@Valid @RequestBody RegistrationFormDTO registrationForm, HttpSession session) {
         // Check if passwords match
         if (!registrationForm.getPassword().equals(registrationForm.getVerifyPassword())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         // Check if username already exists
         if (userRepository.findByUsername(registrationForm.getUsername()) != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         // Create new user
@@ -57,11 +58,11 @@ public class AuthController {
         // Set user in session
         session.setAttribute("user", user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@Valid @RequestBody LoginFormDTO loginForm, HttpSession session) {
+    public ResponseEntity<User> loginUser(@Valid @RequestBody LoginFormDTO loginForm, HttpSession session) {
         // Find user by username
         User user = userRepository.findByUsername(loginForm.getUsername());
 
@@ -69,9 +70,9 @@ public class AuthController {
         if (user != null && passwordEncoder.matches(loginForm.getPassword(), user.getPassword())) {
             // Set user in session
             session.setAttribute("user", user);
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok(user);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
@@ -81,8 +82,6 @@ public class AuthController {
         return ResponseEntity.ok("Logged out successfully");
     }
 }
-
-
 
 //User Endpoint (GET):
 //

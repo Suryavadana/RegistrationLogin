@@ -30,4 +30,5 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
+
 }

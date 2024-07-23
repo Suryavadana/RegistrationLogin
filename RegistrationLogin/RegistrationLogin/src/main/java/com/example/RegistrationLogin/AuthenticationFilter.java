@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 
 import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class AuthenticationFilter implements HandlerInterceptor {
     @Autowired
     private AuthController authController;
 
-    private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css");
+    private static final List<String> whitelist = Arrays.asList("/auth/login", "/auth/register", "/auth/logout", "/css");
 
     private static boolean isWhitelisted(String path) {
         for (String pathRoot : whitelist) {
