@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from './axiosInstance'; // Import your configured Axios instance
+import axiosInstance from '../components/axiosInstance'; // Import your configured Axios instance
 
 const RegistrationForm = () => {
-  const [form, setForm] = useState({ username: '', password: '', verifyPassword: '' });
+  const [form, setForm] = useState({
+    username: '',
+    password: '',
+    verifyPassword: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    address: ''
+  });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
@@ -14,7 +23,7 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { username, password, verifyPassword } = form;
+    const { password, verifyPassword } = form;
 
     if (password !== verifyPassword) {
       setMessage('Passwords do not match');
@@ -22,7 +31,7 @@ const RegistrationForm = () => {
     }
 
     try {
-      const response = await axiosInstance.post('/register', { username, password });
+      const response = await axiosInstance.post('/register', form);
       setMessage(response.data.message);
 
       if (response.status === 201) {
@@ -43,6 +52,61 @@ const RegistrationForm = () => {
         <div className="card-body">
           <h2 className="card-title">Registration Form</h2>
           <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">First Name:</label>
+              <input
+                type="text"
+                className="form-control"
+                name="firstName"
+                value={form.firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Last Name:</label>
+              <input
+                type="text"
+                className="form-control"
+                name="lastName"
+                value={form.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Email:</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Phone Number:</label>
+              <input
+                type="text"
+                className="form-control"
+                name="phoneNumber"
+                value={form.phoneNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Address:</label>
+              <input
+                type="text"
+                className="form-control"
+                name="address"
+                value={form.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
             <div className="mb-3">
               <label className="form-label">Username:</label>
               <input
