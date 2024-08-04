@@ -1,13 +1,14 @@
+// src/components/LoginForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-axios.defaults.withCredentials = true;
+import { useAuth } from '../auth/AuthContext'; // Adjust path as needed
 
 const LoginForm = () => {
   const [form, setForm] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth(); // Destructure login from useAuth
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,13 +18,12 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', form);
-      setMessage('Login successful');
-      // Handle login logic in your application (e.g., updating state)
-      navigate('/nopage'); // Redirect to home or dashboard page after successful login
+      const response = await axios.post('http://localhost:8080/login', form, { withCredentials: true });
+      await login(response.data); // Call login method from AuthContext
+      navigate('/nopage'); // Redirect after login
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data);
+        setMessage(error.response.data.message || 'Login failed');
       } else {
         setMessage('An error occurred. Please try again.');
       }

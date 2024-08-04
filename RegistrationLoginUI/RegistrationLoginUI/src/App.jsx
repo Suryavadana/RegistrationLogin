@@ -1,13 +1,14 @@
+// src/App.jsx
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
 import Nopage from './components/Nopage';
-import { AuthProvider } from './auth/AuthContext'; // Assuming AuthProvider is exported correctly
-
+import ProtectedComponent from './components/ProtectedComponent';
+import ProtectedRoute from './components/ProtectedRoute'; // Import your ProtectedRoute component
+import { AuthProvider } from './auth/AuthContext'; // Import AuthProvider
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProtectedComponent from './components/ProtectedComponent';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Route path="/" element={<RegistrationForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/nopage" element={<Nopage />} />
-          <Route path="/protected/*" element={<ProtectedComponent />} />
+          <Route path="/protected" element={<ProtectedRoute component={ProtectedComponent} />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

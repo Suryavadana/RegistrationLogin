@@ -1,6 +1,9 @@
 package com.example.RegistrationLogin;
 
 import com.example.RegistrationLogin.Controllers.AuthController;
+import com.example.RegistrationLogin.Models.User;
+import com.example.RegistrationLogin.Repositories.UserRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -10,7 +13,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 
 import java.io.IOException;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,13 +20,16 @@ import java.util.List;
 public class AuthenticationFilter implements HandlerInterceptor {
 
     @Autowired
-    private AuthController authController;
+    UserRepository userRepository;
 
-    private static final List<String> whitelist = Arrays.asList("/auth/login", "/auth/register", "/auth/logout", "/css");
+    @Autowired
+    AuthController authController;
+
+    private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout");
 
     private static boolean isWhitelisted(String path) {
         for (String pathRoot : whitelist) {
-            if (path.equals(pathRoot) || path.startsWith(pathRoot + "/")) {
+            if (path.startsWith(pathRoot)) {
                 return true;
             }
         }
@@ -38,20 +43,27 @@ public class AuthenticationFilter implements HandlerInterceptor {
 
         // Don't require sign-in for whitelisted pages
         if (isWhitelisted(request.getRequestURI())) {
+            // returning true indicates that the request may proceed
             return true;
         }
 
-        HttpSession session = request.getSession(false); // false means do not create new session if none exists
+        HttpSession session = request.getSession();
+        User user = authController.getUserFromSession(session);
 
-        // Check if session contains a valid user
-        if (session != null && session.getAttribute("user") != null) {
+        // The user is logged in
+        if (user != null) {
             return true;
         }
 
-        // User is not authenticated, send unauthorized response
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write("Unauthorized");
-        response.getWriter().flush();
-        return false;
+        // The user is NOT logged in
+        if (request.getMethod().equals("OPTIONS")) {
+            // For preflight requests, respond with the necessary CORS headers
+            response.setStatus(HttpServletResponse.SC_OK);
+            return true;
+        } else {
+            // For other requests, respond with a CORS error
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
+        }
     }
 }

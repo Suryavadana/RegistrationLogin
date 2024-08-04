@@ -1,48 +1,91 @@
 package com.example.RegistrationLogin.Models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 @Entity
-@Table(name = "users")
 public class User extends AbstractEntity {
 
-    @NotBlank
+
     private String username;
 
-    @NotBlank
-    private String password;
+    private String pwHash;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String phoneNumber;
+
+    private String address;
+
+
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
 
-    public User(String username, String password) {
+    public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, String address) {
         this.username = username;
-        this.password = encoder.encode(password);
+        this.pwHash = encoder.encode(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
+
 
     public String getUsername() {
         return username;
     }
 
-
-    public void setUsername(String username) {
-        this.username = username;
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
     }
 
 
-   public boolean isMatch(String password) {
-        return encoder.matches(password, this.password); // Check if password matches the hashed password in the database (using BCrypt password);
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
 }

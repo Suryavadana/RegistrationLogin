@@ -7,11 +7,17 @@
     <list default="true" id="fd1e9caf-4a5e-447f-b20f-ac397568af1b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegistrationLogin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/AuthenticationFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Models/DTO/LoginFormDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Models/DTO/LoginFormDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Models/DTO/RegistrationFormDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Models/DTO/RegistrationFormDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/Repositories/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/WebAppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegistrationLogin/src/main/java/com/example/RegistrationLogin/WebAppConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/components/RegistrationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/components/RegistrationForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/auth/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/auth/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/components/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../RegistrationLoginUI/RegistrationLoginUI/src/components/LoginForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,19 +76,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.RegistrationLogin [bootRun].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "C:/Users/surya/OneDrive/Desktop/registrationloginfeatures/RegistrationLogin/RegistrationLogin/RegistrationLogin/src/main/java/com/example/RegistrationLogin",
-    "last_opened_file_path": "C:/Users/surya/OneDrive/Desktop/registrationloginfeatures/RegistrationLogin/RegistrationLogin"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.RegistrationLogin [bootRun].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/surya/OneDrive/Desktop/registrationloginfeatures/RegistrationLogin/RegistrationLogin/RegistrationLogin/src/main/java/com/example/RegistrationLogin&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/surya/OneDrive/Desktop/registrationloginfeatures/RegistrationLogin/RegistrationLogin&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.RegistrationLogin.Controllers" />
       <recent name="com.example.RegistrationLogin" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">

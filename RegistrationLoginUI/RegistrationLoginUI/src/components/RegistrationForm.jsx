@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useAuth } from '../auth/AuthContext';
-
-axios.defaults.withCredentials = true;
+import axiosInstance from './axiosInstance'; // Import your configured Axios instance
 
 const RegistrationForm = () => {
   const [form, setForm] = useState({ username: '', password: '', verifyPassword: '' });
   const [message, setMessage] = useState('');
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,13 +22,15 @@ const RegistrationForm = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/register', form);
-      setMessage('User registered successfully');
-      login(response.data); // Assuming this updates authentication state
-      navigate('/login'); // Redirect to login page after successful registration
+      const response = await axiosInstance.post('/register', { username, password });
+      setMessage(response.data.message);
+
+      if (response.status === 201) {
+        navigate('/login'); // Redirect to login page after successful registration
+      }
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data);
+        setMessage(error.response.data.message || 'Registration failed');
       } else {
         setMessage('An error occurred. Please try again.');
       }

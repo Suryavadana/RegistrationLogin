@@ -1,3 +1,4 @@
+// src/auth/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -11,7 +12,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/auth/user');
+        const response = await axios.get('http://localhost:8080/auth/user', {
+          withCredentials: true,
+        });
         setUser(response.data);
       } catch (error) {
         setUser(null);
@@ -21,13 +24,19 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  const login = (userData) => {
+  const login = async (userData) => {
+    localStorage.setItem('token', userData.token);
     setUser(userData);
   };
 
   const logout = async () => {
-    await axios.post('http://localhost:8080/auth/logout');
-    setUser(null);
+    try {
+      await axios.get('http://localhost:8080/logout', { withCredentials: true });
+      localStorage.removeItem('token');
+      setUser(null);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
